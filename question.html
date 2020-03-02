@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="hello.css">
+</head>
+<body>
+    <p id="wording"></p>
+    <div id="image"></div>
+    <script src="hello.js"></script>
+    <script>
+        var imageid = document.getElementById("image");
+        var pagelength = 0;
+        
+        for (var i = 0 ; i < ques.length ; i++){
+            pagelength = pagelength + heightQues[i]; 
+            if (pagelength >= 2000) {
+                console.log(pagelength)
+                var pbreak = document.createElement("P");
+                pbreak.id ="pagebreak";
+                imageid.appendChild(pbreak);
+                pagelength = heightQues[i];
+            }
+            var words = document.createElement("P");
+            var img = document.createElement("IMG");
+            var otherword = document.createTextNode(i+1+'. '+title[i]);
+            words.appendChild(otherword);
+            img.src = ques[i];
+            img.id = "imaque" + i;
+            imageid.appendChild(words);
+            imageid.appendChild(img);
+            var imgid = document.getElementById("imaque" + i);
+            if (widthQues[i] < 1000){
+                img.style.width = "auto";
+            }else{
+                img.style.width = "100%";
+            }
+            
+
+        }
+    </script>
+</body>
+</html>
