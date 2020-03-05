@@ -21,10 +21,10 @@ arr=[]
 arrUrl=[]
 lenOfArr = []
 AlasOfLast = []
-url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=11&years=&seasons=&chapter=1&paper=1&unit=&zone=&level=&offset=0"
+url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=16&years=&seasons=&chapter=71&paper=&unit=&zone=&level=&offset=0"
 ins = url.split("=")
 eqn = "="
-for s in range(0,40,20):
+for s in range(0,340,20):
     ins[-1] = str(s)
     j = eqn.join(ins)
     arrUrl.append(j)
@@ -79,55 +79,45 @@ for i in range(len(arr)):
     if (i % 2) == 1:
         answ.append(arr[i])
 
-f = open("hello.js", "w")
-f.write("var ques = {};\n".format(ques))
+f = open("hello.py", "w")
+f.write("ques = {}\n".format(ques))
 f.close
-f = open("hello.js", "a")
-f.write("var answ = {};\n".format(answ))
+f = open("hello.py", "a")
+f.write("answ = {}\n".format(answ))
 f.close
-f = open("hello.js", "a")
-f.write("var title = {};\n".format(NewArr))
+f = open("hello.py", "a")
+f.write("title = {}\n".format(NewArr))
 f.close
 
 print('Questions Answers Titles:',len(ques),len(answ),len(NewArr))
 
-from PIL import Image
+""" from PIL import Image
 from io import BytesIO
 
 outmage = 0
 widthImg = []
-heightImg = []
 while (outmage < len(ques)):
     file = BytesIO(urllib.request.urlopen(ques[outmage]).read())
     ima = Image.open(file)
     width , height = ima.size
     widthImg.append(width)
-    heightImg.append(height)
     outmage += 1
 
 ansmage = 0
 answidth = []
-ansheight = []
-if (len(answ[0]) < 5):
-    None
-else:
-    while (ansmage < len(answ)):
+while (ansmage < len(answ)):
+    if (len(answ[ansmage]) < 5):
+        None
+    else:
         fileans = BytesIO(urllib.request.urlopen(answ[ansmage]).read())
         imans = Image.open(fileans)
         widthans , heightans = imans.size
         answidth.append(widthans)
-        ansheight.append(heightans)
         ansmage += 1
 
-f = open("hello.js", "a")
-f.write("var widthQues = {};\n".format(widthImg))
+f = open("hello.py", "a")
+f.write("widthQues = {}\n".format(widthImg))
 f.close
-f = open("hello.js", "a")
-f.write("var heightQues = {};\n".format(heightImg))
-f.close
-f = open("hello.js", "a")
-f.write("var widthAnsw = {};".format(answidth))
-f.close
-f = open("hello.js", "a")
-f.write("var heightAnsw = {};".format(ansheight))
-f.close
+f = open("hello.py", "a")
+f.write("widthAnsw = {}\n".format(answidth))
+f.close """

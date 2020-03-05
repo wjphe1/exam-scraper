@@ -22,3 +22,7 @@ p{
 #pagebreak{
     page-break-before: always;
 }
+
+#pagebreakauto{
+    page-break-before: auto;
+}

@@ -10,7 +10,7 @@
 <body>
     <p id="wording"></p>
     <div id="image"></div>
-    <script src="hello.js"></script>
+    <script src="hello4.js"></script>
     <script>
         var imageid = document.getElementById("image");
         var pagelength = 0;
@@ -33,11 +33,12 @@
             imageid.appendChild(words);
             imageid.appendChild(img);
             var imgid = document.getElementById("imaque" + i);
-            if (widthQues[i] < 1000){
+            /* if (widthQues[i] < 1000){
                 img.style.width = "auto";
             }else{
                 img.style.width = "100%";
-            }
+            } */
+            img.style.width = "100%";
             var pbreak = document.createElement("P");
             pbreak.id ="pagebreak";
             imageid.appendChild(pbreak);

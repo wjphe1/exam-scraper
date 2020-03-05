@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="image"></div>
-    <script src="hello.js"></script>
+    <script src="hello6.js"></script>
     <script>
         var answer = document.getElementById("image");
         var pagelength = 0;
@@ -48,11 +48,12 @@
                 ansimg.src = answ[j];
                 answer.appendChild(words);
                 answer.appendChild(ansimg);
-                if (widthAnsw[j] < 1000){
+                /* if (widthAnsw[j] < 1000){
                     ansimg.style.width = "auto";
                 }else{
                     ansimg.style.width = "100%";
-                }
+                } */
+                ansimg.style.width = "100%";
                 var pbreak = document.createElement("P");
                 pbreak.id ="pagebreak";
                 answer.appendChild(pbreak);

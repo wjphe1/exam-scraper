@@ -10,39 +10,28 @@
 <body>
     <p id="wording"></p>
     <div id="image"></div>
-    <script src="hello.js"></script>
+    <script src="hello2.js"></script>
     <script>
         var imageid = document.getElementById("image");
-        var pagelength = 0;
         
         for (var i = 0 ; i < ques.length ; i++){
-            /* pagelength = pagelength + heightQues[i]; 
-            if (pagelength >= 2000) {
-                console.log(pagelength)
-                var pbreak = document.createElement("P");
-                pbreak.id ="pagebreak";
-                imageid.appendChild(pbreak);
-                pagelength = heightQues[i];
-            } */
+            var uniques = document.createElement("DIV")
+            uniques.style.pageBreakInside = "avoid";
             var words = document.createElement("P");
             var img = document.createElement("IMG");
             var otherword = document.createTextNode(i+1+'. '+title[i]);
             words.appendChild(otherword);
             img.src = ques[i];
             img.id = "imaque" + i;
-            imageid.appendChild(words);
-            imageid.appendChild(img);
-            var imgid = document.getElementById("imaque" + i);
-            if (widthQues[i] < 1000){
+            uniques.appendChild(words);
+            uniques.appendChild(img);
+            imageid.appendChild(uniques)
+            /* if (widthQues[i] < 1000){
                 img.style.width = "auto";
             }else{
                 img.style.width = "100%";
-            }
-            var pbreak = document.createElement("P");
-            pbreak.id ="pagebreak";
-            imageid.appendChild(pbreak);
-            
-
+            } */
+            img.style.width = "100%";
         }
     </script>
 </body>
