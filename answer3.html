@@ -12,18 +12,18 @@
     <script src="hello3.js"></script>
     <script>
         var answer = document.getElementById("image");
-        var pagelength = 0;
+        /* var pagelength = 0; */
         
         for (var j = 0 ; j < answ.length ; j++){
             if (answ[j].length <= 2){
-                pagelength = pagelength + 30;
+                /* pagelength = pagelength + 30;
                 if (pagelength >= 2000) {
                     console.log(pagelength)
                     var pbreak = document.createElement("P");
                     pbreak.id ="pagebreak";
                     answer.appendChild(pbreak);
                     pagelength = 30;
-                }
+                } */
                 var words = document.createElement("P");
                 var ansimg = document.createElement("P");
                 var ansss = document.createTextNode(answ[j]);
@@ -53,7 +53,7 @@
                 }else{
                     ansimg.style.width = "100%";
                 } */
-                ansimg.style.width = "100%"
+                ansimg.style.maxWidth = "100%";
                 var pbreak = document.createElement("P");
                 pbreak.id ="pagebreak";
                 answer.appendChild(pbreak);

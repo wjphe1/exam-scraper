@@ -1,3 +1,3 @@
-var ques = ['https://www.exam-mate.com/questions/17196/51813/17196_q_51813_1_1.png', 'https://www.exam-mate.com/questions/17198/51821/17198_q_51821_3_1.png', 'https://www.exam-mate.com/questions/19788/54766/19788_q_54766_3_1.png', 'https://www.exam-mate.com/questions/19790/54772/19790_q_54772_3_1.png', 'https://www.exam-mate.com/questions/21427/62676/21427_q_62676_3_1.png'];
-var answ = ['https://www.exam-mate.com/questions/17196/51813/17196_a_51813_1_1.png', 'https://www.exam-mate.com/questions/17198/51821/17198_a_51821_3_1.png', 'https://www.exam-mate.com/questions/19788/54766/19788_a_54766_3_1.png', 'https://www.exam-mate.com/questions/19790/54772/19790_a_54772_3_1.png', 'https://www.exam-mate.com/questions/21427/62676/21427_a_62676_3_1.png'];
-var title = ['(0620-S 2018-Paper 5/1-Q1)', '(0620-S 2018-Paper 5/3-Q3)', '(0620-W 2018-Paper 5/1-Q3)', '(0620-W 2018-Paper 5/3-Q3)', '(0620-W 2019-Paper 5/2-Q3)'];
+var ques = [];
+var answ = [];
+var title = [];

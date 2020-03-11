@@ -21,10 +21,10 @@ arr=[]
 arrUrl=[]
 lenOfArr = []
 AlasOfLast = []
-url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=16&years=&seasons=&chapter=71&paper=&unit=&zone=&level=&offset=0"
+url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=22&years=&seasons=&chapter=108&paper=&unit=&zone=&level=&offset=0"
 ins = url.split("=")
 eqn = "="
-for s in range(0,340,20):
+for s in range(0,60,20):
     ins[-1] = str(s)
     j = eqn.join(ins)
     arrUrl.append(j)
@@ -89,7 +89,7 @@ f = open("hello.py", "a")
 f.write("title = {}\n".format(NewArr))
 f.close
 
-print('Questions Answers Titles:',len(ques),len(answ),len(NewArr))
+print('{} Questions {} Answers {} Titles'.format(len(ques),len(answ),len(NewArr)))
 
 """ from PIL import Image
 from io import BytesIO

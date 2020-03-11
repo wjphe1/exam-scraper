@@ -9,13 +9,13 @@
 </head>
 <body>
     <p id="wording"></p>
-    <div id="image"></div>
+    <table id="image"></table>
     <script src="hello1.js"></script>
     <script>
         var imageid = document.getElementById("image");
         
         for (var i = 0 ; i < ques.length ; i++){
-            var uniques = document.createElement("DIV")
+            var uniques = document.createElement("TR")
             uniques.style.pageBreakInside = "avoid";
             var words = document.createElement("P");
             var img = document.createElement("IMG");
@@ -31,7 +31,7 @@
             }else{
                 img.style.width = "100%";
             } */
-            img.style.width = "100%";
+            img.style.maxWidth = "90%"; 
         }
     </script>
 </body>
