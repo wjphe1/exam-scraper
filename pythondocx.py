@@ -30,26 +30,20 @@ for chap in range(21): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
     paragraph_format = document.styles['Normal'].paragraph_format
     paragraph_format.line_spacing = 1.5
 
+    papernum = '6'
+    paperpath = 'Biology'
+    QorA = 'A'
     pic = []
-    #pic = [f for f in glob.glob("png/Biology/Paper1/CH"+str(chap+1)+"/Question/*.png")] ### CHANGE PAPER NUMBER & QUESTION/ANSWER
-    #pic = [f for f in glob.glob("png/Biology/Paper1/CH"+str(chap+1)+"/Answer/*.png")]
-    pic = [h for h in glob.glob("png/Biology/Paper1/CH"+str(chap+1)+"/Answer/*.txt")] ### FOR TXT
+    #pic = [f for f in glob.glob("png/"+paperpath+"/Unit"+papernum+"/CH"+str(chap+1)+"/Question/*.png")] ### CHANGE PAPER NUMBER & QUESTION/ANSWER
+    pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.png")]
+    #pic = [h for h in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.txt")] ### FOR TXT
 
     name = []
     for g in range(len(pic)):
-        name.append(pic[g][33:-5])
-
-    ans = []
-    for j in range(len(pic)):
-        with open(pic[j], 'r') as f:
-            x = f.readlines()
-            ans.append(x)
-
-    if len(pic) == len(name):
-        print('YES! CH{} has {} pictures' .format(chap+1, len(pic)))
+        name.append(pic[g][1:-5])
 
     # CREATE TABLE FOR WRITING PNG FILES
-    """ table = document.add_table(rows=0, cols=1)
+    table = document.add_table(rows=0, cols=1)
     table.style = 'Table Grid'
     table.autofit = True
 
@@ -59,7 +53,15 @@ for chap in range(21): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
         run = paragraph.insert_paragraph_before(name[i]+'\n', style='List Number').add_run()
         picture = run.add_picture(pic[i])
         if picture.width > Inches(5.5):
-            scale_picture(picture, Inches(5.5)) """
+            scale_picture(picture, Inches(5.5))
+
+    # ONLY FOR OBJECTIVE ANSWERS EXTRACTING
+    """ ans = []
+    for j in range(len(pic)):
+        with open(pic[j], 'r') as f:
+        #file = open(pic[j], encoding="utf8", errors='ignore')
+            x = f.readlines()
+            ans.append(x)
     
     # CREATE TABLE FOR WRITING TXT FILES
     table = document.add_table(rows=0, cols=5)
@@ -74,11 +76,14 @@ for chap in range(21): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
         colcount = colcount + 1
         if colcount == 5:
             colcount = 0
-            row_cells = table.add_row().cells
+            row_cells = table.add_row().cells """
    
 
     # PREVENT BREAK
     prevent_document_break(document)
 
     # SAVE THE FILE
-    document.save('docx/Biology/Paper1/A_P1CH'+str(chap+1)+'.docx') ### CHANGE PAPER NUMBER
+    document.save('docx/'+paperpath+'/Paper'+papernum+'/'+QorA+'_P'+papernum+'CH'+str(chap+1)+'.docx') ### CHANGE PAPER NUMBER
+
+    if len(pic) == len(name):
+        print('YES! docx/'+paperpath+'/Paper'+papernum+'/'+QorA+'_P'+papernum+'CH'+str(chap+1)+'.docx has {} pictures' .format(len(pic)))
