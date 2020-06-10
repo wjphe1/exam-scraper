@@ -16,10 +16,10 @@ session = requests.Session()
 per_session = session.post("https://www.exam-mate.com/reguser/checklogin", 
 data={'email':'lawliet5145@gmail.com', 'password':'kAmehAmehA1!'})
 
-chs=['38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58']
-i_count=1
-""" current_unit = '6(IAL)' """
-total_count=0
+chs=['40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58']
+CH_count = 3
+current_paper = '3,3%20(Core),4,4%20(Extended),5,6'
+
 
 for x in chs:    
     NewArr=[]
@@ -27,10 +27,10 @@ for x in chs:
     arrUrl=[]
     lenOfArr = []
     AlasOfLast = []
-    url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=13&years=&seasons=&chapter="+ x +"&paper=&zone=&offset=0"
+    url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=13&years=&seasons=&chapter="+ x +"&paper="+ current_paper +"&zone=&offset=0"
     ins = url.split("=")
     eqn = "="
-    for s in range(0,720,20):
+    for s in range(0,220,20):
         ins[-1] = str(s)
         j = eqn.join(ins)
         arrUrl.append(j)
@@ -85,55 +85,77 @@ for x in chs:
         if (i % 2) == 1:
             answ.append(arr[i])
 
+        
+    if len(ques)==len(answ)==len(NewArr):
+        print('~\n~\n~\nNumber of Questions: {}\n'.format(len(NewArr)))
+
+    quest = []
+    answe = []
+    for i in range(len(ques)):
+        for k in range(1,11):
+            cont = ques[i].replace('_1.png',"_{k}.png".format(k=k)) if (ques[i].endswith("png")) else ques[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (ques[i].endswith("jpg")) else ques[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
+            if (requests.get(cont).status_code == 200):
+                quest.append(cont)
+                print(cont)
+            cant = answ[i].replace('_1.png',"_{k}.png".format(k=k)) if (answ[i].endswith("png")) else answ[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (answ[i].endswith("jpg")) else answ[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
+            if (requests.get(cant).status_code == 200):
+                answe.append(cant)
+                print(cant)
+
+    print('~\n~\n~\nNumber of Questions: {}\nQuestion Images: {}\nAnswer Images: {}'.format(len(NewArr),len(quest),len(answe)))
+
+
     f = open("hello.py", "w")
-    f.write("ques = {}\n".format(ques))
+    f.write("ques = {}\n".format(quest))
     f.close
     f = open("hello.py", "a")
-    f.write("answ = {}\n".format(answ))
+    f.write("answ = {}\n".format(answe))
     f.close
     f = open("hello.py", "a")
     f.write("title = {}\n".format(NewArr))
     f.close
 
-    if len(ques) == len(answ) == len(NewArr):
-        print('~\n~\n~\n*GREEN* All length are equals to ',len(NewArr))
-        total_count = total_count + len(NewArr)
-    else:
-        print('*RED* Somethings wrong')
-
     import urllib.request
 
     #Question
-    """ ja = 0
-    for i in range(len(ques)):
-        filename = NewArr[i+ja].replace('/','-') + '.png'
-        fpath = 'png/Biology/Paper'+filename[19]+'/CH'+str(i_count)+'/Question/'
-        urllib.request.urlretrieve(ques[i+ja], fpath+filename)
-        print(i+1+ja, "-> Saved", fpath+filename) """
+    titlenum = 0
+    for i in range(len(quest)):
+        if quest[i][-5] != '1':
+            filename = NewArr[titlenum-1].replace('/','-') + '_' + quest[i][-5] + '.png'
+            filename = filename.replace('(','').replace(')','')
+            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+            urllib.request.urlretrieve(quest[i], fpath+filename)
+            print(i+1, "-> Saved", fpath+filename)
+        else:
+            filename = NewArr[titlenum].replace('/','-') + '.png'
+            filename = filename.replace('(','').replace(')','')
+            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+            titlenum = titlenum + 1
+            urllib.request.urlretrieve(quest[i], fpath+filename)
+            print(i+1, "-> Saved", fpath+filename)
 
     # Answer
-    jo = 0
-    for i in range(len(answ)):
-
-        if len(answ[i+jo]) <= 40:
-            filename = NewArr[i+jo].replace('/','-')
-            filename = filename.replace('Q','A')
-            fpath = 'png/Biology/Paper'+filename[19]+'/CH'+str(i_count)+'/Answer/'
-            f = open(fpath+filename+".txt", "w")
-            f.write(answ[i+jo])
-            f.close
-            print(i+1+jo, "-> Saved", fpath+filename+".txt")
+    atitnum = 0
+    for i in range(len(answe)):
+        if answe[i][-5] != '1':
+            filename = NewArr[atitnum-1].replace('/','-') + '_' + answe[i][-5] + '.png'
+            filename = filename.replace('Q','A').replace('(','').replace(')','')
+            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+            urllib.request.urlretrieve(answe[i], fpath+filename)
+            print(i+1, "-> Saved", fpath+filename)
         else:
-            filename = NewArr[i+jo].replace('/','-') + '.png'
-            filename = filename.replace('Q','A')
-            fpath = 'png/Biology/Paper'+filename[19]+'/CH'+str(i_count)+'/Answer/'
-            urllib.request.urlretrieve(answ[i+jo], fpath+filename)
-            print(i+1+jo, "-> Saved", fpath+filename)
+            filename = NewArr[atitnum].replace('/','-') + '.png'
+            filename = filename.replace('Q','A').replace('(','').replace(')','')
+            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+            atitnum = atitnum + 1
+            urllib.request.urlretrieve(answe[i], fpath+filename)
+            print(i+1, "-> Saved", fpath+filename)
     
-    i_count = i_count + 1
+    CH_count = CH_count + 1
+    
+
 
 #print('{} Questions {} Answers {} Titles'.format(len(ques),len(answ),len(NewArr)))
-print('~\n~\n~\nScraped total: ',total_count)
 
 """ from PIL import Image
 from io import BytesIO
@@ -166,7 +188,7 @@ f = open("hello.py", "a")
 f.write("widthAnsw = {}\n".format(answidth))
 f.close """
 
-ques1R=[];ques2R=[];ques1=[];ques2=[];ques3H=[];ques4H=[];ques3HR=[];ques4HR=[]
+#ques1R=[];ques2R=[];ques1=[];ques2=[];ques3H=[];ques4H=[];ques3HR=[];ques4HR=[]
 
 
 

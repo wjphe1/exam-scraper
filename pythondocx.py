@@ -1,8 +1,14 @@
 from docx import Document
 from docx.shared import Inches
 from docx.oxml.shared import OxmlElement
+from docx.enum.text import WD_BREAK
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 import glob
 import os
+
+chname = ['CH 1 - SETS', 'CH 2 - INTERSECTION POINTS', 'CH 3 - SURDS,INDICES,LOG', 'CH 4 - FACTOR THEOREM', 'CH 5 - MATRICES', 'CH 6 - COORDINATE GEOMETRY', 'CH 7 - LINEAR LAW', 'CH 8 - FUNCTIONS', 'CH 9 - TRIGONOMETRY', 'CH 10 - CIRCULAR MEASURE', 'CH 11 - PERMUTATION AND  COMBINATION', 'CH 12 - BINOMIAL THEOREM', 'CH 13 - DIFFERENTIATION', 'CH 14 - INTEGRATION', 'CH 15 - KINEMATICS', 'CH 16 - VECTORS', 'CH 17 - RELATIVE VELOCITY']
+ph = ''
+
 
 # Prevent table rows from breaking with page layout
 def prevent_document_break(document):
@@ -23,37 +29,62 @@ def scale_picture(picture, new_width):
     picture.width = new_width
 
 # Loop starts
-for chap in range(21): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
+for chap in range(17): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
 
     document = Document()
 
     paragraph_format = document.styles['Normal'].paragraph_format
     paragraph_format.line_spacing = 1.5
 
-    papernum = '6'
-    paperpath = 'Biology'
-    QorA = 'A'
+    papernum = '1'             # 2. CHANGE PAPER NUMBER
+    paperpath = 'IGCSE/AddMath'      # 3. CHANGE SUBJECT
+    QorA = 'A'                 # 4. CHANGE Q or A
+    title = chname[chap]
     pic = []
-    #pic = [f for f in glob.glob("png/"+paperpath+"/Unit"+papernum+"/CH"+str(chap+1)+"/Question/*.png")] ### CHANGE PAPER NUMBER & QUESTION/ANSWER
-    pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.png")]
+    if QorA == 'Q':
+        pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Question/*.png")] ### CHANGE PAPER NUMBER & QUESTION/ANSWER
+    else:
+        pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.png")]
     #pic = [h for h in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.txt")] ### FOR TXT
 
     name = []
     for g in range(len(pic)):
-        name.append(pic[g][1:-5])
+        name.append(pic[g].split("/")[-1][7:-4])
 
     # CREATE TABLE FOR WRITING PNG FILES
+    chapter_title = document.add_heading(title, 0)
+    title_format = chapter_title.paragraph_format
+    title_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    spac = document.add_paragraph().add_run()
+    spac.add_break(WD_BREAK.PAGE)
+    
     table = document.add_table(rows=0, cols=1)
     table.style = 'Table Grid'
     table.autofit = True
 
     for i in range(len(pic)):
-        row_cells = table.add_row().cells
-        paragraph = row_cells[0].paragraphs[0]
-        run = paragraph.insert_paragraph_before(name[i]+'\n', style='List Number').add_run()
-        picture = run.add_picture(pic[i])
-        if picture.width > Inches(5.5):
-            scale_picture(picture, Inches(5.5))
+        if name[i][-2] == '_':
+            row_cells = table.add_row().cells
+            paragraph = row_cells[0].paragraphs[0]
+            run = paragraph.add_run()
+            picture = run.add_picture(pic[i])
+            if picture.width > Inches(5.5):
+                scale_picture(picture, Inches(5.5))
+                ph = ph + (picture.height*Inches(5.5))/picture.width
+            else:
+                ph = ph + picture.height
+            if ph > Inches(8.3):
+                print(name[i].split("_")[0],ph)
+        else:
+            row_cells = table.add_row().cells
+            paragraph = row_cells[0].paragraphs[0]
+            run = paragraph.insert_paragraph_before(name[i]+'\n', style='List Number').add_run()
+            picture = run.add_picture(pic[i])
+            if picture.width > Inches(5.5):
+                scale_picture(picture, Inches(5.5))
+                ph = (picture.height*Inches(5.5))/picture.width
+            else:
+                ph = picture.height
 
     # ONLY FOR OBJECTIVE ANSWERS EXTRACTING
     """ ans = []
@@ -86,4 +117,4 @@ for chap in range(21): ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
     document.save('docx/'+paperpath+'/Paper'+papernum+'/'+QorA+'_P'+papernum+'CH'+str(chap+1)+'.docx') ### CHANGE PAPER NUMBER
 
     if len(pic) == len(name):
-        print('YES! docx/'+paperpath+'/Paper'+papernum+'/'+QorA+'_P'+papernum+'CH'+str(chap+1)+'.docx has {} pictures' .format(len(pic)))
+        print('YES! docx/'+paperpath+'/Paper'+papernum+'/'+QorA+'_P'+papernum+'CH'+str(chap+1)+'.docx has {} pictures.. -> CH' .format(len(pic)))
