@@ -10,15 +10,17 @@ from urllib.request import urlopen
 import re, random, datetime
 random.seed(datetime.datetime.now())
 
-add_stderr_logger()
+#add_stderr_logger()
 
 session = requests.Session()
 per_session = session.post("https://www.exam-mate.com/reguser/checklogin", 
 data={'email':'lawliet5145@gmail.com', 'password':'kAmehAmehA1!'})
 
-chs=['40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58']
-CH_count = 3
-current_paper = '3,3%20(Core),4,4%20(Extended),5,6'
+
+chs=[534,535,536,537,538,539]
+CH_count = 14
+
+current_paper = '2,3,4,5'
 
 
 for x in chs:    
@@ -27,10 +29,10 @@ for x in chs:
     arrUrl=[]
     lenOfArr = []
     AlasOfLast = []
-    url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=13&years=&seasons=&chapter="+ x +"&paper="+ current_paper +"&zone=&offset=0"
+    url = "https://www.exam-mate.com/topicalpastpapers/?cat=5&subject=48&years=&seasons=&chapter="+ str(x) +"&paper="+ current_paper +"&zone=&offset=0"
     ins = url.split("=")
     eqn = "="
-    for s in range(0,220,20):
+    for s in range(0,160,20):
         ins[-1] = str(s)
         j = eqn.join(ins)
         arrUrl.append(j)
@@ -73,6 +75,10 @@ for x in chs:
     for n in range(len(lenOfArr)) :
         NewArr.append(lenOfArr[n].strip())
 
+    f = open("hello.py", "w")
+    f.write("NewArr = {}\n".format(NewArr))
+    f.close
+
     ques = []
     answ = []
 
@@ -92,28 +98,29 @@ for x in chs:
     quest = []
     answe = []
     for i in range(len(ques)):
+        print('{} in {}' .format(i+1,len(ques)))
         for k in range(1,11):
-            cont = ques[i].replace('_1.png',"_{k}.png".format(k=k)) if (ques[i].endswith("png")) else ques[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (ques[i].endswith("jpg")) else ques[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
-            if (requests.get(cont).status_code == 200):
-                quest.append(cont)
-                print(cont)
-            cant = answ[i].replace('_1.png',"_{k}.png".format(k=k)) if (answ[i].endswith("png")) else answ[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (answ[i].endswith("jpg")) else answ[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
-            if (requests.get(cant).status_code == 200):
-                answe.append(cant)
-                print(cant)
+            if len(ques[i]) > 25:
+                cont = ques[i].replace('_1.png',"_{k}.png".format(k=k)) if (ques[i].endswith("png")) else ques[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (ques[i].endswith("jpg")) else ques[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
+                if (requests.get(cont).status_code == 200):
+                    quest.append(cont)
+                    print(cont)
+            if len(answ[i]) > 25:
+                cant = answ[i].replace('_1.png',"_{k}.png".format(k=k)) if (answ[i].endswith("png")) else answ[i].replace('_1.jpg',"_{k}.jpg".format(k=k)) if (answ[i].endswith("jpg")) else answ[i].replace('_1.jpeg',"_{k}.jpeg".format(k=k))
+                if (requests.get(cant).status_code == 200):
+                    answe.append(cant)
+                    print(cant)
 
     print('~\n~\n~\nNumber of Questions: {}\nQuestion Images: {}\nAnswer Images: {}'.format(len(NewArr),len(quest),len(answe)))
 
 
-    f = open("hello.py", "w")
-    f.write("ques = {}\n".format(quest))
+    f = open("hello.py", "a")
+    f.write("quest = {}\n".format(quest))
     f.close
     f = open("hello.py", "a")
-    f.write("answ = {}\n".format(answe))
+    f.write("answe = {}\n".format(answe))
     f.close
-    f = open("hello.py", "a")
-    f.write("title = {}\n".format(NewArr))
-    f.close
+    
 
     import urllib.request
 
@@ -123,13 +130,13 @@ for x in chs:
         if quest[i][-5] != '1':
             filename = NewArr[titlenum-1].replace('/','-') + '_' + quest[i][-5] + '.png'
             filename = filename.replace('(','').replace(')','')
-            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
             urllib.request.urlretrieve(quest[i], fpath+filename)
             print(i+1, "-> Saved", fpath+filename)
         else:
             filename = NewArr[titlenum].replace('/','-') + '.png'
             filename = filename.replace('(','').replace(')','')
-            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
             titlenum = titlenum + 1
             urllib.request.urlretrieve(quest[i], fpath+filename)
             print(i+1, "-> Saved", fpath+filename)
@@ -140,13 +147,13 @@ for x in chs:
         if answe[i][-5] != '1':
             filename = NewArr[atitnum-1].replace('/','-') + '_' + answe[i][-5] + '.png'
             filename = filename.replace('Q','A').replace('(','').replace(')','')
-            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
             urllib.request.urlretrieve(answe[i], fpath+filename)
             print(i+1, "-> Saved", fpath+filename)
         else:
             filename = NewArr[atitnum].replace('/','-') + '.png'
             filename = filename.replace('Q','A').replace('(','').replace(')','')
-            fpath = 'png/IGCSE/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
             atitnum = atitnum + 1
             urllib.request.urlretrieve(answe[i], fpath+filename)
             print(i+1, "-> Saved", fpath+filename)
