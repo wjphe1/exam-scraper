@@ -19,10 +19,10 @@ per_session = session.post("https://www.exam-mate.com/reguser/checklogin",
 data={'email':'lawliet5145@gmail.com', 'password':'kAmehAmehA1!'},timeout=None)
 
 
-chs=[534,535,536,537,538,539]
-CH_count = 14
+chs=[357,358,624,625,626,627]
+CH_count = 1
 
-current_paper = '2,3,4,5'
+current_paper = '5'
 
 
 for x in chs:    
@@ -31,10 +31,10 @@ for x in chs:
     arrUrl=[]
     lenOfArr = []
     AlasOfLast = []
-    url = "https://www.exam-mate.com/topicalpastpapers/?cat=5&subject=48&years=&seasons=&chapter="+ str(x) +"&paper="+ current_paper +"&zone=&offset=0"
+    url = "https://www.exam-mate.com/topicalpastpapers/?cat=5&subject=57&years=&seasons=&chapter="+ str(x) +"&paper="+ current_paper +"&zone=&offset=0"
     ins = url.split("=")
     eqn = "="
-    for s in range(0,160,20):
+    for s in range(0,100,20):
         ins[-1] = str(s)
         j = eqn.join(ins)
         arrUrl.append(j)
@@ -148,37 +148,39 @@ for x in chs:
     titlenum = 0
     for i in range(len(quest)):
         time.sleep(1)
-        if quest[i][-5] != '1':
-            filename = NewArr[titlenum-1].replace('/','-') + '_' + quest[i][-5] + '.png'
-            filename = filename.replace('(','').replace(')','')
-            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
-            urllib.request.urlretrieve(quest[i], fpath+filename)
-            print(i+1, "-> Saved", fpath+filename)
-        else:
-            filename = NewArr[titlenum].replace('/','-') + '.png'
-            filename = filename.replace('(','').replace(')','')
-            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
-            titlenum = titlenum + 1
-            urllib.request.urlretrieve(quest[i], fpath+filename)
-            print(i+1, "-> Saved", fpath+filename)
+        if len(quest[i]) > 25:
+            if quest[i][-5] != '1':
+                filename = NewArr[titlenum-1].replace('/','-') + '_' + quest[i][-5] + '.png'
+                filename = filename.replace('(','').replace(')','')
+                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+                urllib.request.urlretrieve(quest[i], fpath+filename)
+                print(i+1, "-> Saved", fpath+filename)
+            else:
+                filename = NewArr[titlenum].replace('/','-') + '.png'
+                filename = filename.replace('(','').replace(')','')
+                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+                titlenum = titlenum + 1
+                urllib.request.urlretrieve(quest[i], fpath+filename)
+                print(i+1, "-> Saved", fpath+filename)
 
     # Answer
     atitnum = 0
     for i in range(len(answe)):
         time.sleep(1)
-        if answe[i][-5] != '1':
-            filename = NewArr[atitnum-1].replace('/','-') + '_' + answe[i][-5] + '.png'
-            filename = filename.replace('Q','A').replace('(','').replace(')','')
-            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
-            urllib.request.urlretrieve(answe[i], fpath+filename)
-            print(i+1, "-> Saved", fpath+filename)
-        else:
-            filename = NewArr[atitnum].replace('/','-') + '.png'
-            filename = filename.replace('Q','A').replace('(','').replace(')','')
-            fpath = 'png/Alevel/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
-            atitnum = atitnum + 1
-            urllib.request.urlretrieve(answe[i], fpath+filename)
-            print(i+1, "-> Saved", fpath+filename)
+        if len(answe[i]) > 25:
+            if answe[i][-5] != '1':
+                filename = NewArr[atitnum-1].replace('/','-') + '_' + answe[i][-5] + '.png'
+                filename = filename.replace('Q','A').replace('(','').replace(')','')
+                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+                urllib.request.urlretrieve(answe[i], fpath+filename)
+                print(i+1, "-> Saved", fpath+filename)
+            else:
+                filename = NewArr[atitnum].replace('/','-') + '.png'
+                filename = filename.replace('Q','A').replace('(','').replace(')','')
+                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+                atitnum = atitnum + 1
+                urllib.request.urlretrieve(answe[i], fpath+filename)
+                print(i+1, "-> Saved", fpath+filename)
     
     CH_count = CH_count + 1
     

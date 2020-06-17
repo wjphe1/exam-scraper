@@ -6,7 +6,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 import glob
 import os
 
-chname = ['CH 1 - Methodology - Research Methods - Theory and Methods - P1', 'CH 2 - Culture, Identity and Socialization -P1', 'CH 3 - Social Stratification and Inequality - P1', 'CH 4 - Power and Authority - P1', 'CH 5 - Family - P2', 'CH 6 - Education - P2', 'CH 7 - Crime, Deviance and Social Control - P2', 'CH 8 - Media - P2']
+chname = ['CH 1 - Hypothesis Testing Using Binomial Distribution', 'CH 2 - Hypothesis Testing Using Normal Distribution', 'CH 3 - Poisson Distribution', 'CH 4 - Linear Combination Of Random Variables', 'CH 5 - Continuous Random Variables', 'CH 6 - Sampling']
 ph=''
 
 # Prevent table rows from breaking with page layout
@@ -33,15 +33,15 @@ def delete_paragraph(paragraph):
     p._p = p._element = None
 
 # Loop starts
-for chap in range(8):              ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
+for chap in range(len(chname)):              ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
 
     document = Document()
 
     paragraph_format = document.styles['Normal'].paragraph_format
     paragraph_format.line_spacing = 1.5
 
-    papernum = '1'                   # 2. CHANGE PAPER NUMBER
-    paperpath = 'IGCSE/ICT'      # 3. CHANGE SUBJECT
+    papernum = '7'                   # 2. CHANGE PAPER NUMBER
+    paperpath = 'Alevel/MathStats2'      # 3. CHANGE SUBJECT
     QorA = 'A'                       # 4. CHANGE Q or A
     title = chname[chap]
     pic = []
