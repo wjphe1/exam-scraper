@@ -6,6 +6,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 import glob
 import os
 
+# Insert an array of chapter names here
 chname = ['CH 1 - Hypothesis Testing Using Binomial Distribution', 'CH 2 - Hypothesis Testing Using Normal Distribution', 'CH 3 - Poisson Distribution', 'CH 4 - Linear Combination Of Random Variables', 'CH 5 - Continuous Random Variables', 'CH 6 - Sampling']
 ph=''
 
@@ -33,23 +34,23 @@ def delete_paragraph(paragraph):
     p._p = p._element = None
 
 # Loop starts
-for chap in range(len(chname)):              ### 1. CHANGE CHAPTER NUMBER FOR THAT TOPIC
+for chap in range(len(chname)):
 
     document = Document()
 
     paragraph_format = document.styles['Normal'].paragraph_format
     paragraph_format.line_spacing = 1.5
 
-    papernum = '7'                   # 2. CHANGE PAPER NUMBER
-    paperpath = 'Alevel/MathStats2'      # 3. CHANGE SUBJECT
-    QorA = 'A'                       # 4. CHANGE Q or A
+    papernum = '7'                        # 2. CHANGE PAPER NUMBER
+    paperpath = 'Alevel/MathStats2'       # 3. CHANGE SUBJECT
+    QorA = 'A'                            # 4. CHANGE Q or A
     title = chname[chap]
     pic = []
     if QorA == 'Q':
         pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Question/*.png")] 
     else:
-        pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.png")]
-        #pic = [h for h in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.txt")] ### FOR TXT
+        #pic = [f for f in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.png")]
+        pic = [h for h in glob.glob("png/"+paperpath+"/Paper"+papernum+"/CH"+str(chap+1)+"/Answer/*.txt")] ### FOR TXT
 
     name = []
     for g in range(len(pic)):
@@ -65,8 +66,9 @@ for chap in range(len(chname)):              ### 1. CHANGE CHAPTER NUMBER FOR TH
     table = document.add_table(rows=0, cols=1)
     table.style = 'Table Grid'
     table.autofit = True
-
-    for i in range(len(pic)):
+    
+    # FOR IMAGES
+    """ for i in range(len(pic)):
         if name[i][-2] == '_':
             picture = run.add_picture(pic[i])
             if picture.width > Inches(5.5):
@@ -90,10 +92,10 @@ for chap in range(len(chname)):              ### 1. CHANGE CHAPTER NUMBER FOR TH
                 scale_picture(picture, Inches(5.5))
                 ph = (picture.height*Inches(5.5))/picture.width
             else:
-                ph = picture.height
+                ph = picture.height """ 
 
     # ONLY FOR OBJECTIVE ANSWERS EXTRACTING
-    """ ans = []
+    ans = []
     for j in range(len(pic)):
         with open(pic[j], 'r') as f:
         #file = open(pic[j], encoding="utf8", errors='ignore')
@@ -113,7 +115,7 @@ for chap in range(len(chname)):              ### 1. CHANGE CHAPTER NUMBER FOR TH
         colcount = colcount + 1
         if colcount == 5:
             colcount = 0
-            row_cells = table.add_row().cells """
+            row_cells = table.add_row().cells
    
 
     # PREVENT BREAK
