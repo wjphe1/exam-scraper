@@ -56,19 +56,19 @@ for chap in range(len(chname)):
     for g in range(len(pic)):
         name.append(pic[g].split("\\")[-1][:-4])
 
-    # CREATE TABLE FOR WRITING PNG FILES
+    # ADDING DOCX TITLE
     chapter_title = document.add_heading(title, 0)
     title_format = chapter_title.paragraph_format
     title_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
     spac = document.add_paragraph().add_run()
     spac.add_break(WD_BREAK.PAGE)
-
-    table = document.add_table(rows=0, cols=1)
+    
+    # CREATE TABLE FOR WRITING PNG FILES
+    """table = document.add_table(rows=0, cols=1)
     table.style = 'Table Grid'
     table.autofit = True
     
-    # FOR IMAGES
-    """ for i in range(len(pic)):
+    for i in range(len(pic)):
         if name[i][-2] == '_':
             picture = run.add_picture(pic[i])
             if picture.width > Inches(5.5):
@@ -80,10 +80,10 @@ for chap in range(len(chname)):
                 print(name[i].split("_")[0], ph)
 
         else:
-            """ document.add_section()
-            table = document.add_table(rows=0, cols=1)
-            table.style = 'Table Grid'
-            table.autofit = True """
+            #document.add_section()
+            #table = document.add_table(rows=0, cols=1)
+            #table.style = 'Table Grid'
+            #table.autofit = True
             row_cells = table.add_row().cells
             paragraph = row_cells[0].paragraphs[0]
             run = paragraph.insert_paragraph_before(name[i]+'\n', style='List Number').add_run()
