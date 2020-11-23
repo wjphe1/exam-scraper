@@ -19,10 +19,10 @@ per_session = session.post("https://www.exam-mate.com/reguser/checklogin",
 data={'email':'lawliet5145@gmail.com', 'password':'kAmehAmehA1!'},timeout=None)
 
 
-chs=[357,358,624,625,626,627]
+chs=[38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58]  # 1. CHANGE THIS ARRAY TO ALL CHAPTER NUMBERS
 CH_count = 1
 
-current_paper = '5'
+current_paper = '1%20(Core)'  # 2. CHANGE THE PAPER NUMBER
 
 
 for x in chs:    
@@ -31,10 +31,10 @@ for x in chs:
     arrUrl=[]
     lenOfArr = []
     AlasOfLast = []
-    url = "https://www.exam-mate.com/topicalpastpapers/?cat=5&subject=57&years=&seasons=&chapter="+ str(x) +"&paper="+ current_paper +"&zone=&offset=0"
-    ins = url.split("=")
+    url = "https://www.exam-mate.com/topicalpastpapers/?cat=3&subject=13&years=&seasons=&chapter="+ str(x) +"&paper="+ current_paper +"&zone=&offset=0"
+    ins = url.split("=")                               #  ^^^^^^^^^^ 3. CHANGE THIS URL CAT=??? and subject=??? 
     eqn = "="
-    for s in range(0,100,20):
+    for s in range(0,100,20):   # 4. CHANGE THE RANGE FROM TO TOTAL QUESTION NUMBER, X -> range(0, X, 20)
         ins[-1] = str(s)
         j = eqn.join(ins)
         arrUrl.append(j)
@@ -152,13 +152,13 @@ for x in chs:
             if quest[i][-5] != '1':
                 filename = NewArr[titlenum-1].replace('/','-') + '_' + quest[i][-5] + '.png'
                 filename = filename.replace('(','').replace(')','')
-                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+                fpath = 'png/Cambridge/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
                 urllib.request.urlretrieve(quest[i], fpath+filename)
                 print(i+1, "-> Saved", fpath+filename)
             else:
                 filename = NewArr[titlenum].replace('/','-') + '.png'
                 filename = filename.replace('(','').replace(')','')
-                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
+                fpath = 'png/Cambridge/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Question/'
                 titlenum = titlenum + 1
                 urllib.request.urlretrieve(quest[i], fpath+filename)
                 print(i+1, "-> Saved", fpath+filename)
@@ -167,20 +167,29 @@ for x in chs:
     atitnum = 0
     for i in range(len(answe)):
         time.sleep(1)
-        if len(answe[i]) > 25:
+        if len(answe[i]) > 25: # THIS IS IMAGE SUBJECTIVE ANSWER
             if answe[i][-5] != '1':
                 filename = NewArr[atitnum-1].replace('/','-') + '_' + answe[i][-5] + '.png'
                 filename = filename.replace('Q','A').replace('(','').replace(')','')
-                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+                fpath = 'png/Cambridge/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
                 urllib.request.urlretrieve(answe[i], fpath+filename)
                 print(i+1, "-> Saved", fpath+filename)
             else:
                 filename = NewArr[atitnum].replace('/','-') + '.png'
                 filename = filename.replace('Q','A').replace('(','').replace(')','')
-                fpath = 'png/Alevel/MathMech2/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+                fpath = 'png/Cambridge/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
                 atitnum = atitnum + 1
                 urllib.request.urlretrieve(answe[i], fpath+filename)
                 print(i+1, "-> Saved", fpath+filename)
+        else: # THIS IS TXT OBJECTIVE ANSWER
+            filename = NewArr[atitnum].replace('/','-') + '.txt'
+            filename = filename.replace('Q','A').replace('(','').replace(')','')
+            fpath = 'png/Cambridge/Biology/Paper'+filename[18]+'/CH'+str(CH_count)+'/Answer/'
+            f = open(fpath + filename, "w")
+            f.write(answ[i])
+            f.close
+            atitnum = atitnum + 1
+            print(i+1, "-> Saved", fpath+filename)
     
     CH_count = CH_count + 1
     
