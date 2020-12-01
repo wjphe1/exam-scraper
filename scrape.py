@@ -54,14 +54,16 @@ for x in chs:
                 for anc in content.find_all('a', class_="qabtn"):
                     splitting = anc['onclick'].split(",")[1]
                     spli = splitting.translate({ord("'"): None})
-                    if len(spli) > 2:
+                    if len(spli) > 15:  # add more to prevent treating some long objective answer as url strings
                         adding = "https://www.exam-mate.com"+spli
                         spli = adding.replace(" ","")
                     arr.append(spli)
 
                 for tit in content.find_all("div" , class_="question"):
                     for title in tit.find_all("div"):
-                        AlasOfLast.append(title.string)
+                        if "(" in title.find(text=True, recursive=False):                 # For IB DIPLOMA
+                            AlasOfLast.append(title.find(text=True, recursive=False))     # For IB DIPLOMA
+                        #AlasOfLast.append(title.string)                                   # For Other Papers
 
                 while (CountStr < len(AlasOfLast)):
                     if (AlasOfLast[CountStr] == None):
@@ -75,8 +77,10 @@ for x in chs:
                         
                 count += 1
 
-        for n in range(len(lenOfArr)) :
-            NewArr.append(lenOfArr[n].strip())
+        for n in range(len(AlasOfLast)) :            # For IB DIPLOMA
+            NewArr.append(AlasOfLast[n].strip())     # For IB DIPLOMA
+        #for n in range(len(lenOfArr)) :            # For Other Papers
+            #NewArr.append(lenOfArr[n].strip())     # For Other Papers
 
     except:
         print("timeout or connection reset by peer")
