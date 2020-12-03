@@ -190,7 +190,7 @@ for x in chs:
             filename = filename.replace('Q','A').replace('(','').replace(')','')
             fpath = 'png/IB/Biology/'+ filename[19] +'L/Paper'+filename[34]+'/CH'+str(CH_count)+'/Answer/'
             f = open(fpath + filename, "w")
-            f.write(answ[i])
+            f.write(answe[i])
             f.close
             atitnum = atitnum + 1
             print(i+1, "-> Saved", fpath+filename)
